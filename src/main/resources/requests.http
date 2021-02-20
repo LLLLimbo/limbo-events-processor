@@ -1,0 +1,15 @@
+POST http://localhost:8080/triggerEvent
+Content-Type: application/cloudevents+json
+TENANT: 1azipgi
+
+{
+  "specversion" : "1.0",
+  "type" : "org.springframework",
+  "source" : "https://spring.io/",
+  "id" : "A234-1234-1234",
+  "datacontenttype" : "application/json",
+  "data" : {
+    "phone": "17682453276",
+    "contractId": "defaultId"
+  }
+}
