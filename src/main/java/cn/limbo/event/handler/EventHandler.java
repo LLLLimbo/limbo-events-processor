@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class EventHandler {
 
   private final ZeebeClient zeebeClientLifecycle;
-  private static final Long CONTRACT_SIGNED_EVENT_CODE = 100L;
 
   public EventHandler(ZeebeClient zeebeClientLifecycle) {
     this.zeebeClientLifecycle = zeebeClientLifecycle;
@@ -27,11 +26,12 @@ public class EventHandler {
       log.info("A request has arrived . Request body: {}", message);
 
       String tenant = message.getHeaders().get("tenant", String.class);
+      String eventCode=message.getHeaders().get("event",String.class);
       BasicData basicData = message.getPayload();
 //Create instance.
       final WorkflowInstanceEvent workflowInstanceEvent =
           zeebeClientLifecycle.newCreateInstanceCommand()
-              .bpmnProcessId("Process_" + CONTRACT_SIGNED_EVENT_CODE + "_" + tenant)
+              .bpmnProcessId("Process_" + eventCode + "_" + tenant)
               .latestVersion()
               .variables(basicData)
               .send()
